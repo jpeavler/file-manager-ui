@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {Modal, ModalHeader, ModalBody, Form, Input, Button} from 'reactstrap';
 
 const MediaForm = ({myFile, id, media, setMedia, setUpdate}) => {
@@ -70,7 +70,7 @@ const MediaForm = ({myFile, id, media, setMedia, setUpdate}) => {
                             onChange = {({target}) => setFileName(target.value)} required/>
                         <Input placeholder = "Description" value = {desc} type = "textarea" 
                             onChange = {({target}) => setDesc(target.value)} required/>
-                        <Input type = "file" color = "primary"/>
+                        {/* <Input type = "file" color = "primary"/> */}
                         {renderSubmit}
                         {cancel}
                     </Form>
