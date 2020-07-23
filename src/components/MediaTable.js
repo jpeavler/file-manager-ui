@@ -23,7 +23,9 @@ const MediaTable = () => {
             <tr key = {file.id}>
                 <td>{file.filename}</td>
                 <td>{file.desc}</td>
-                <td><Button color = "primary">View</Button></td>
+                <td><Button color = "primary" block>View</Button></td>
+                <td><Button color = "primary" onClick = {() => handleUpdate(file)} block>Edit</Button></td>
+                <td><Button color = "primary" block>Delete</Button></td>
             </tr>
         )
     });
@@ -37,7 +39,7 @@ const MediaTable = () => {
             <Table>
                 <thead>
                     <tr>
-                        <th>File Name</th><th>Description</th><th>View</th>
+                        <th>File Name</th><th>Description</th><th>View</th><th>Edit</th><th>Delete</th>
                     </tr>
                     {displayMedia}
                 </thead>

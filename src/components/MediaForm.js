@@ -4,9 +4,10 @@ import {Modal, ModalHeader, ModalBody, Form, Input, Button} from 'reactstrap';
 const MediaForm = ({myFile, id, media, setMedia, setUpdate}) => {
     let formFileName = myFile ? myFile.filename : "";
     let formDesc = myFile ? myFile.desc : "";
+    let modalOpen = myFile ? true : false;
     const [filename, setFileName] = useState(formFileName);
     const [desc, setDesc] = useState(formDesc);
-    const [modal, setModal] = useState(false);
+    const [modal, setModal] = useState(modalOpen);
 
     const closeForm = () => {
         setFileName("");
