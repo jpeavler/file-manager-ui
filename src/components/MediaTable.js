@@ -18,14 +18,25 @@ const MediaTable = () => {
         setFileToUpdate(file);
         setUpdate(true);
     }
+    const handleDelete = (id) => {
+        fetch(`http://localhost:8000/api/media/${id}`, {
+            method: "DELETE"
+        })
+        .then(response => response.json())
+        .then(res => {
+            let mediaCopy = Object.assign({}, media);
+            mediaCopy.data = mediaCopy.data.filter(file => file.id !== id);
+            setMedia(mediaCopy);
+        });
+    }
     const displayMedia = media.data.map((file) => {
         return (
             <tr key = {file.id}>
                 <td>{file.filename}</td>
                 <td>{file.desc}</td>
-                <td><Button color = "primary" block>View</Button></td>
+                {/* <td><Button color = "primary" block>View</Button></td> */}
                 <td><Button color = "primary" onClick = {() => handleUpdate(file)} block>Edit</Button></td>
-                <td><Button color = "primary" block>Delete</Button></td>
+                <td><Button color = "primary" onClick = {() => handleDelete(file.id)} block>Delete</Button></td>
             </tr>
         )
     });
@@ -39,7 +50,7 @@ const MediaTable = () => {
             <Table>
                 <thead>
                     <tr>
-                        <th>File Name</th><th>Description</th><th>View</th><th>Edit</th><th>Delete</th>
+                        <th>File Name</th><th>Description</th>{/*<th>View</th>*/}<th>Edit</th><th>Delete</th>
                     </tr>
                     {displayMedia}
                 </thead>
