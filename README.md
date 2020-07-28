@@ -1,16 +1,16 @@
 ## File Manager UI
-This app was created utilizing JavaScript and React. When completed, it will
-allow the client to upload photos and videos to the server (powered by PHP, MySQL,
-and Laravel). The server will then be able to store these files in an AWS S3 bucket.
-As the app currently stands, it can perform Full CRUD operations to add a representation
-of a filename and allow the user to add a description.
+This app was created utilizing JavaScript and React. As the app currently stands, the app will allow users to upload images and video (given the file size is small enough) to the Laravel server I made as well as an S3 bucket I also made. The Github page of the server can be found at https://github.com/jpeavler/file-manager-api and is integral to the usage of this UI. Once the user uploads a file to the server, these images and videos can be viewed in a modal. The viewing of videos are only compatible with MP4 files. The user may also update the file description and delete the file from the server's database.
+
+## Note
+
+If you are unable to upload a file due to the file size, you can adjust the file size max of the server by adjusting the "post_max_size" and "upload_max_filesize" within your php.ini file.
 
 ## ToDo
+
 - Complete Server's ToDo list
-- Adjust calls to the server once AWS S3 functionality is implemented
 - Add pagination to view of files
-- Add viewing of individual photos and videos
-- Add preview of files in table view
+- Add progress bar to axios post
+- Add testing suite of UI
 
 ## Instructions for Running this Project on your Localhost
 1. Ensure that you have first completed setting up the server.
