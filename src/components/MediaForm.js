@@ -68,7 +68,7 @@ const MediaForm = ({myFile, id, media, setMedia, setUpdate}) => {
     let formHeader = myFile ? <ModalHeader key = "edit-head">Edit File Description: {myFile.filename}</ModalHeader>
         : <ModalHeader key = "add-head">Add a New File</ModalHeader>
     let fileUpload = myFile ? null
-        : <Input type = "file" color = "primary" onChange = {onFileChage} required/>
+        : <Input type = "file" color = "primary" onChange = {onFileChage} accept = ".jpg, .mp4" required/>
     return (
         <>
             <Button color = "primary" onClick={toggle}>Add New Media File</Button>
