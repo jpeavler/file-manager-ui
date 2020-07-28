@@ -65,8 +65,10 @@ const MediaForm = ({myFile, id, media, setMedia, setUpdate}) => {
         : <Button color = "primary" key = "add" type = "submit" block>Add File</Button>
     let cancel = myFile ? <Button type = "button" key = "cancel-edit" onClick = {() => closeForm()} block>Cancel Edit</Button>
         : <Button type = "button" key = "cancel-add" onClick = {toggle} block>Cancel Add</Button>
-    let formHeader = myFile ? <ModalHeader key = "edit-head">Edit File: {myFile.filename}</ModalHeader>
+    let formHeader = myFile ? <ModalHeader key = "edit-head">Edit File Description: {myFile.filename}</ModalHeader>
         : <ModalHeader key = "add-head">Add a New File</ModalHeader>
+    let fileUpload = myFile ? null
+        : <Input type = "file" color = "primary" onChange = {onFileChage} required/>
     return (
         <>
             <Button color = "primary" onClick={toggle}>Add New Media File</Button>
@@ -76,7 +78,7 @@ const MediaForm = ({myFile, id, media, setMedia, setUpdate}) => {
                     <Form onSubmit = {handleSubmit}>
                         <Input placeholder = "Description" value = {desc} type = "textarea" 
                             onChange = {({target}) => setDesc(target.value)} required/>
-                        <Input type = "file" color = "primary" onChange = {onFileChage} required/>
+                        {fileUpload}
                         {renderSubmit}
                         {cancel}
                     </Form>
