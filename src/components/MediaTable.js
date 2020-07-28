@@ -37,9 +37,12 @@ const MediaTable = () => {
         });
     }
     const displayMedia = media.data.map((file) => {
+        let fileType = file.filename.split('.').pop();
+        let thumbnail = (fileType === "mp4") ? <video src = {file.s3url} width = "60px"/>
+            : <img src = {file.s3url} alt = {file.desc} width = "60px"/>;
         return (
             <tr key = {file.id}>
-                <td><img src = {file.s3url} alt = {file.desc} width = "30px"/></td>
+                <td>{thumbnail}</td>
                 <td>{file.filename}</td>
                 <td>{file.desc}</td>
                 <td><Button color = "primary" onClick = {() => handleView(file)} block>View</Button></td>
