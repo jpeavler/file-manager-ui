@@ -13,7 +13,7 @@ const MediaView = ({myFile, setView, setFileToView}) => {
     if(myFile) {
         let fileType = myFile.filename.split('.').pop();
         console.log("fileType: ", fileType);
-        mediaDisplay = (fileType === "mp4") ? <video src = {myFile.s3url} controls/>
+        mediaDisplay = (fileType === "mp4") ? <video src = {myFile.s3url} controls width = "100%"/>
             : <img src = {myFile.s3url}/>
     }
     return (
