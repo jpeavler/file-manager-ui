@@ -1,24 +1,33 @@
 import React, {useState} from 'react';
 import {Modal, ModalHeader, ModalBody, Form, Input, Button} from 'reactstrap';
+import axios from 'axios';
 
 const MediaForm = ({myFile, id, media, setMedia, setUpdate}) => {
     let formFileName = myFile ? myFile.filename : "";
     let formDesc = myFile ? myFile.desc : "";
     let modalOpen = myFile ? true : false;
-    const [filename, setFileName] = useState(formFileName);
+    const [filename, setFilename] = useState(formFileName);
+    const [file, setFile] = useState('');
     const [desc, setDesc] = useState(formDesc);
     const [modal, setModal] = useState(modalOpen);
 
     const closeForm = () => {
-        setFileName("");
+        setFilename("");
         setDesc("");
         setModal(!modal);
         setUpdate(false);
     }
-    const handleSubmit = (event) => {
+    const onFileChage = (event) => {
+        setFile(event.target.files[0]);
+        setFilename(event.target.files[0].name);
+    }
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const tempS3 = "aws.com/file/myfile"    //Placeholder for when real S3 link is generated on backend
-        const medium = {filename, desc, s3url : tempS3}
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('filename', filename);
+        formData.append('desc', desc);
+        const medium = {file, filename, desc};
         if(myFile) {
             fetch(`http://localhost:8000/api/media/${id}`, {
                 method : "PUT",
@@ -37,20 +46,19 @@ const MediaForm = ({myFile, id, media, setMedia, setUpdate}) => {
             })
             .then(() => closeForm());
         } else {
-            fetch(`http://localhost:8000/api/media`, {
-                method : "POST",
-                headers : {"Content-Type" : "application/json"},
-                body : JSON.stringify(medium)
+            const result = await axios.post(`http://localhost:8000/api/media`, formData, {
+                headers: {
+                    'Content-Type' : 'multipart/form-data',
+                    'Accept' : 'application/json'
+                }
             })
-            .then(response => response.json())
             .then(res => {
                 let mediaCopy = Object.assign({}, media);
-                mediaCopy.data.push(res.data);
+                mediaCopy.data.push(res.data.data);
                 setMedia(mediaCopy);
             })
             .then(() => closeForm());
         }
-
     }
     const toggle = () => {setModal(!modal)}
     let renderSubmit = myFile ? <Button color = "primary" key = "edit" type = "submit" block>Edit File</Button>
@@ -66,11 +74,9 @@ const MediaForm = ({myFile, id, media, setMedia, setUpdate}) => {
                 {formHeader}
                 <ModalBody>
                     <Form onSubmit = {handleSubmit}>
-                        <Input placeholder = "File Name" value = {filename} type = "text" 
-                            onChange = {({target}) => setFileName(target.value)} required/>
                         <Input placeholder = "Description" value = {desc} type = "textarea" 
                             onChange = {({target}) => setDesc(target.value)} required/>
-                        {/* <Input type = "file" color = "primary"/> */}
+                        <Input type = "file" color = "primary" onChange = {onFileChage} required/>
                         {renderSubmit}
                         {cancel}
                     </Form>
